@@ -1,0 +1,5 @@
+*.o
+/release
+/sts3x/sts3x_example_usage_hw_i2c
+/sts3x/sts3x_example_usage_sw_i2c
+/sts-common/git_version.c

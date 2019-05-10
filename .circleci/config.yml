@@ -1,0 +1,23 @@
+version: 2
+
+jobs:
+  build:
+
+    docker:
+        - image: gcc:5.5.0
+
+    steps:
+
+      - checkout
+
+      - run:
+          name: update common repo
+          command: git submodule update --init
+      - run: apt update
+      - run: apt install -y zip
+      - run: make release
+      - run: make
+      - run:
+          name: make driver
+          command: |
+              cd release/sts3x && make && make clean && cd -
