@@ -51,12 +51,12 @@ int main(void) {
     /* printf("STS sensor probing successful\n"); */
 
     while (1) {
-        s32 temperature;
+        int32_t temperature;
         float temperature_degree;
         /* Measure temperature  and store into variable temperature
          * (output is multiplied by 1000).
          */
-        s8 ret = sts_measure_blocking_read(&temperature);
+        int8_t ret = sts_measure_blocking_read(&temperature);
         if (ret == STATUS_OK) {
             temperature_degree = temperature / 1000.0f;
             /* printf("measured temperature: %0.2f degreeCelsius\n",

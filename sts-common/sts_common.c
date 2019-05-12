@@ -41,22 +41,22 @@
 #include "sensirion_i2c.h"
 #include "sts.h"
 
-s8 sts_common_read_ticks(u8 address, s32 *temperature_ticks) {
-    u8 data[3];
-    s8 ret = sensirion_i2c_read(address, data, sizeof(data));
+int8_t sts_common_read_ticks(uint8_t address, int32_t *temperature_ticks) {
+    uint8_t data[3];
+    int8_t ret = sensirion_i2c_read(address, data, sizeof(data));
     if (ret)
         return ret;
     if (sensirion_common_check_crc(data, 2, data[2])) {
         return STATUS_CRC_FAIL;
     }
 
-    *temperature_ticks = (data[1] & 0xff) | ((s32)data[0] << 8);
+    *temperature_ticks = (data[1] & 0xff) | ((int32_t)data[0] << 8);
 
     return STATUS_OK;
 }
 
-s8 sts_common_read_measurement(u8 address, s32 *temperature) {
-    s8 ret = sts_common_read_ticks(address, temperature);
+int8_t sts_common_read_measurement(uint8_t address, int32_t *temperature) {
+    int8_t ret = sts_common_read_ticks(address, temperature);
     /**
      * formulas for conversion of the sensor signals, optimized for fixed point
      * algebra: Temperature       = 175 * S_T / 2^16 - 45

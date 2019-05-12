@@ -38,9 +38,9 @@
 extern "C" {
 #endif
 
-s8 sts_common_read_ticks(u8 address, s32 *temperature_ticks);
+int8_t sts_common_read_ticks(uint8_t address, int32_t *temperature_ticks);
 
-s8 sts_common_read_measurement(u8 address, s32 *temperature);
+int8_t sts_common_read_measurement(uint8_t address, int32_t *temperature);
 
 #ifdef __cplusplus
 }
