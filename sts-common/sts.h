@@ -60,7 +60,7 @@ extern "C" {
  *
  * @return 0 if a sensor was detected
  */
-s8 sts_probe(void);
+int8_t sts_probe(void);
 
 /**
  * Starts a measurement and then reads out the results. This function blocks
@@ -72,7 +72,7 @@ s8 sts_probe(void);
  * measurement
  * @return              0 if the command was successful, else an error code.
  */
-s8 sts_measure_blocking_read(s32 *temperature);
+int8_t sts_measure_blocking_read(int32_t *temperature);
 
 /**
  * Starts a measurement in high precision mode. Use sts_read() to read out the
@@ -81,7 +81,7 @@ s8 sts_measure_blocking_read(s32 *temperature);
  *
  * @return     0 if the command was successful, else an error code.
  */
-s8 sts_measure(void);
+int8_t sts_measure(void);
 
 /**
  * Reads out the results of a measurement that was previously started by
@@ -93,7 +93,7 @@ s8 sts_measure(void);
  * measurement
  * @return              0 if the command was successful, else an error code.
  */
-s8 sts_read(s32 *temperature);
+int8_t sts_read(int32_t *temperature);
 
 /**
  * Set repeatability of the STS
@@ -102,7 +102,7 @@ s8 sts_read(s32 *temperature);
  *                      1 for medium repeatability mode
  *                      2 for low repeatability mode
  */
-void sts_set_repeatability(u8 repeatability);
+void sts_set_repeatability(uint8_t repeatability);
 
 /**
  * Enable internal heater. The heater is meant for plausibility check only.
@@ -110,7 +110,7 @@ void sts_set_repeatability(u8 repeatability);
  * @return 0 if the command was successful,
  *         1 if an error occured
  */
-s8 sts_heater_on(void);
+int8_t sts_heater_on(void);
 
 /**
  * Disable internal heater
@@ -118,7 +118,7 @@ s8 sts_heater_on(void);
  * @return 0 if the command was successful,
  *         1 if an error occured
  */
-s8 sts_heater_off(void);
+int8_t sts_heater_off(void);
 
 /**
  * sts_get_driver_version() - Return the driver version
@@ -132,7 +132,7 @@ const char *sts_get_driver_version(void);
  *
  * @return STSxx_ADDRESS
  */
-u8 sts_get_configured_sts_address(void);
+uint8_t sts_get_configured_sts_address(void);
 
 #ifdef __cplusplus
 }
