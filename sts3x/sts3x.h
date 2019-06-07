@@ -38,11 +38,12 @@
  * interface. It supports measurements without clock stretching only.
  */
 
-#ifndef STS_H
-#define STS_H
+#ifndef STS3X_H
+#define STS3X_H
 
-#include "git_version.h"
 #include "sensirion_arch_config.h"
+#include "sensirion_i2c.h"
+#include "sts_git_version.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -60,7 +61,7 @@ extern "C" {
  *
  * @return 0 if a sensor was detected
  */
-int8_t sts_probe(void);
+int16_t sts3x_probe(void);
 
 /**
  * Starts a measurement and then reads out the results. This function blocks
@@ -72,20 +73,20 @@ int8_t sts_probe(void);
  * measurement
  * @return              0 if the command was successful, else an error code.
  */
-int8_t sts_measure_blocking_read(int32_t *temperature);
+int16_t sts3x_measure_blocking_read(int32_t *temperature);
 
 /**
- * Starts a measurement in high precision mode. Use sts_read() to read out the
+ * Starts a measurement in high precision mode. Use sts3x_read() to read out the
  * values, once the measurement is done. The duration of the measurement depends
  * on the sensor in use, please consult the datasheet.
  *
  * @return     0 if the command was successful, else an error code.
  */
-int8_t sts_measure(void);
+int16_t sts3x_measure(void);
 
 /**
  * Reads out the results of a measurement that was previously started by
- * sts_measure(). If the measurement is still in progress, this function
+ * sts3x_measure(). If the measurement is still in progress, this function
  * returns an error.
  * Temperature is returned in [degree Celsius], multiplied by 1000
  *
@@ -93,7 +94,7 @@ int8_t sts_measure(void);
  * measurement
  * @return              0 if the command was successful, else an error code.
  */
-int8_t sts_read(int32_t *temperature);
+int16_t sts3x_read(int32_t *temperature);
 
 /**
  * Set repeatability of the STS
@@ -102,7 +103,7 @@ int8_t sts_read(int32_t *temperature);
  *                      1 for medium repeatability mode
  *                      2 for low repeatability mode
  */
-void sts_set_repeatability(uint8_t repeatability);
+void sts3x_set_repeatability(uint8_t repeatability);
 
 /**
  * Enable internal heater. The heater is meant for plausibility check only.
@@ -110,7 +111,7 @@ void sts_set_repeatability(uint8_t repeatability);
  * @return 0 if the command was successful,
  *         1 if an error occured
  */
-int8_t sts_heater_on(void);
+int16_t sts3x_heater_on(void);
 
 /**
  * Disable internal heater
@@ -118,24 +119,24 @@ int8_t sts_heater_on(void);
  * @return 0 if the command was successful,
  *         1 if an error occured
  */
-int8_t sts_heater_off(void);
+int16_t sts3x_heater_off(void);
 
 /**
- * sts_get_driver_version() - Return the driver version
+ * Return the driver version
  *
  * @return Driver version string
  */
-const char *sts_get_driver_version(void);
+const char *sts3x_get_driver_version(void);
 
 /**
  * Returns the configured STSxx address.
  *
  * @return STSxx_ADDRESS
  */
-uint8_t sts_get_configured_sts_address(void);
+uint8_t sts3x_get_configured_address(void);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* STS_H */
+#endif /* STS3X_H */

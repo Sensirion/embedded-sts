@@ -38,98 +38,96 @@
  * interface. It supports measurements without clock stretching only.
  */
 
+#include "sts3x.h"
 #include "sensirion_arch_config.h"
 #include "sensirion_common.h"
 #include "sensirion_i2c.h"
-#include "sts.h"
-#include "sts_common.h"
 
 /* all measurement commands return T (CRC) RH (CRC) */
 #if USE_SENSIRION_CLOCK_STRETCHING
-static const uint8_t CMD_MEASURE_HPM[] = {0x2C, 0x06};
-static const uint8_t CMD_MEASURE_MPM[] = {0x2C, 0x0D};
-static const uint8_t CMD_MEASURE_LPM[] = {0x2C, 0x10};
+#define STS3X_CMD_MEASURE_HPM 0x2C06
+#define STS3X_CMD_MEASURE_MPM 0x2C0D
+#define STS3X_CMD_MEASURE_LPM 0x2C10
 #else
-static const uint8_t CMD_MEASURE_HPM[] = {0x24, 0x00};
-static const uint8_t CMD_MEASURE_MPM[] = {0x24, 0x0B};
-static const uint8_t CMD_MEASURE_LPM[] = {0x24, 0x16};
+#define STS3X_CMD_MEASURE_HPM 0x2400
+#define STS3X_CMD_MEASURE_MPM 0x240B
+#define STS3X_CMD_MEASURE_LPM 0x2416
 #endif /* USE_SENSIRION_CLOCK_STRETCHING */
-static const uint8_t CMD_READ_STATUS_REG[] = {0xF3, 0x2D};
-static const uint8_t CMD_HEATER_ON[] = {0x30, 0x6D};
-static const uint8_t CMD_HEATER_OFF[] = {0x30, 0x66};
-static const uint8_t COMMAND_SIZE = sizeof(CMD_MEASURE_HPM);
+static const uint16_t STS3X_CMD_READ_STATUS_REG = 0xF32D;
+static const uint16_t STS3X_CMD_DURATION_USEC = 1000;
+static const uint16_t STS3X_CMD_HEATER_ON = 0x306D;
+static const uint16_t STS3X_CMD_HEATER_OFF = 0x3066;
 #ifdef STS_ADDRESS
 static const uint8_t STS3X_ADDRESS = STS_ADDRESS;
 #else
 static const uint8_t STS3X_ADDRESS = 0x4A;
 #endif
 
-static const uint16_t MEASUREMENT_DURATION_USEC = 15000;
+static const uint16_t STS3X_MEASUREMENT_DURATION_USEC = 15000;
 
-static const uint8_t *cmd_measure = CMD_MEASURE_HPM;
+static uint16_t sts3x_cmd_measure = STS3X_CMD_MEASURE_HPM;
 
-int8_t sts_measure_blocking_read(int32_t *temperature) {
-    int8_t ret = sts_measure();
+int16_t sts3x_measure_blocking_read(int32_t *temperature) {
+    int8_t ret = sts3x_measure();
     if (ret == STATUS_OK) {
-        sensirion_sleep_usec(MEASUREMENT_DURATION_USEC);
-        ret = sts_read(temperature);
+#if !defined(USE_SENSIRION_CLOCK_STRETCHING) || !USE_SENSIRION_CLOCK_STRETCHING
+        sensirion_sleep_usec(STS3X_MEASUREMENT_DURATION_USEC);
+#endif /* USE_SENSIRION_CLOCK_STRETCHING */
+        ret = sts3x_read(temperature);
     }
     return ret;
 }
 
-int8_t sts_measure() {
-    return sensirion_i2c_write(STS3X_ADDRESS, CMD_MEASURE_HPM, COMMAND_SIZE);
+int16_t sts3x_measure() {
+    return sensirion_i2c_write_cmd(STS3X_ADDRESS, sts3x_cmd_measure);
 }
 
-int8_t sts_read(int32_t *temperature) {
-    return sts_common_read_measurement(STS3X_ADDRESS, temperature);
+int16_t sts3x_read(int32_t *temperature) {
+    uint16_t word;
+    int16_t ret = sensirion_i2c_read_words(STS3X_ADDRESS, &word, 1);
+    /**
+     * formula for conversion of the sensor signals, optimized for fixed point
+     * algebra: Temperature = 175 * S_T / 2^16 - 45
+     */
+    *temperature = ((21875 * (int32_t)word) >> 13) - 45000;
+
+    return ret;
 }
 
-int8_t sts_probe() {
-    uint8_t data[3];
-    sensirion_i2c_init();
-    int8_t ret =
-        sensirion_i2c_write(STS3X_ADDRESS, CMD_READ_STATUS_REG, COMMAND_SIZE);
-    if (ret)
-        return ret;
-
-    ret = sensirion_i2c_read(STS3X_ADDRESS, data, sizeof(data));
-    if (ret)
-        return ret;
-
-    ret = sensirion_common_check_crc(data, 2, data[2]);
-    if (ret)
-        return ret;
-    return STATUS_OK;
+int16_t sts3x_probe() {
+    uint16_t status;
+    return sensirion_i2c_delayed_read_cmd(STS3X_ADDRESS,
+                                          STS3X_CMD_READ_STATUS_REG,
+                                          STS3X_CMD_DURATION_USEC, &status, 1);
 }
 
-void sts_set_repeatability(uint8_t repeatability) {
+void sts3x_set_repeatability(uint8_t repeatability) {
     switch (repeatability) {
         case 2:
-            cmd_measure = CMD_MEASURE_LPM;
+            sts3x_cmd_measure = STS3X_CMD_MEASURE_LPM;
             break;
         case 1:
-            cmd_measure = CMD_MEASURE_MPM;
+            sts3x_cmd_measure = STS3X_CMD_MEASURE_MPM;
             break;
         case 0:
         default:
-            cmd_measure = CMD_MEASURE_HPM;
+            sts3x_cmd_measure = STS3X_CMD_MEASURE_HPM;
             break;
     }
 }
 
-int8_t sts_heater_on(void) {
-    return sensirion_i2c_write(STS3X_ADDRESS, CMD_HEATER_ON, COMMAND_SIZE);
+int16_t sts3x_heater_on(void) {
+    return sensirion_i2c_write_cmd(STS3X_ADDRESS, STS3X_CMD_HEATER_ON);
 }
 
-int8_t sts_heater_off(void) {
-    return sensirion_i2c_write(STS3X_ADDRESS, CMD_HEATER_OFF, COMMAND_SIZE);
+int16_t sts3x_heater_off(void) {
+    return sensirion_i2c_write_cmd(STS3X_ADDRESS, STS3X_CMD_HEATER_OFF);
 }
 
-const char *sts_get_driver_version() {
+const char *sts3x_get_driver_version() {
     return STS_DRV_VERSION_STR;
 }
 
-uint8_t sts_get_configured_sts_address() {
+uint8_t sts3x_get_configured_address() {
     return STS3X_ADDRESS;
 }
