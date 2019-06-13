@@ -32,7 +32,7 @@
 /* #include <stdio.h> // printf
  * #include <unistd.h> // sleep
  */
-#include "sts.h"
+#include "sts3x.h"
 
 /**
  * TO USE CONSOLE OUTPUT (PRINTF) AND WAIT (SLEEP) PLEASE ADAPT THEM TO YOUR
@@ -40,11 +40,13 @@
  */
 
 int main(void) {
+    /* Initialize I2C bus */
+    sensirion_i2c_init();
 
     /* Busy loop for initialization, because the main loop does not work without
      * a sensor.
      */
-    while (sts_probe() != STATUS_OK) {
+    while (sts3x_probe() != STATUS_OK) {
         /* printf("STS sensor probing failed\n"); */
         /* sleep(1); */
     }
@@ -56,7 +58,7 @@ int main(void) {
         /* Measure temperature  and store into variable temperature
          * (output is multiplied by 1000).
          */
-        int8_t ret = sts_measure_blocking_read(&temperature);
+        int16_t ret = sts3x_measure_blocking_read(&temperature);
         if (ret == STATUS_OK) {
             temperature_degree = temperature / 1000.0f;
             /* printf("measured temperature: %0.2f degreeCelsius\n",
