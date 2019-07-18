@@ -5,6 +5,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+ * [`fixed`]  Improved compatibility with C++ compilers
  * [`changed`]  Return types are now `int16_t` instead of `int8_t` (in line with
                 other embedded drivers).
  * [`changed`]  Functions are now dedicated per sensor (e.g. `sts3x_probe()`
