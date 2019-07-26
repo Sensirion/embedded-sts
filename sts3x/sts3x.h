@@ -122,6 +122,14 @@ int16_t sts3x_heater_on(void);
 int16_t sts3x_heater_off(void);
 
 /**
+ * Read out the serial number
+ *
+ * @param serial    the address for the result of the serial number
+ * @return          0 if the command was successful, else an error code.
+ */
+int16_t sts3x_read_serial(uint32_t *serial);
+
+/**
  * Return the driver version
  *
  * @return Driver version string
