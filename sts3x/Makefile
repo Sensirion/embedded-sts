@@ -3,7 +3,8 @@ sts_common_dir := ../sts-common
 sw_i2c_dir := ${sensirion_common_dir}/sw_i2c
 hw_i2c_dir := ${sensirion_common_dir}/hw_i2c
 
-CFLAGS := -Wall -I. -I${sensirion_common_dir} -I${sts_common_dir}
+CFLAGS := -Os -fstrict-aliasing -Wstrict-aliasing=1 -Wall -Wsign-conversion \
+          -I. -I${sensirion_common_dir} -I${sts_common_dir}
 
 sensirion_common_objects := sensirion_common.o
 sts_common_objects := sts_git_version.o

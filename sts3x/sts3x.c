@@ -54,6 +54,7 @@
 #define STS3X_CMD_MEASURE_LPM 0x2416
 #endif /* USE_SENSIRION_CLOCK_STRETCHING */
 static const uint16_t STS3X_CMD_READ_STATUS_REG = 0xF32D;
+static const uint16_t STS3X_CMD_READ_SERIAL_ID = 0x3780;
 static const uint16_t STS3X_CMD_DURATION_USEC = 1000;
 static const uint16_t STS3X_CMD_HEATER_ON = 0x306D;
 static const uint16_t STS3X_CMD_HEATER_OFF = 0x3066;
@@ -118,6 +119,21 @@ void sts3x_set_repeatability(uint8_t repeatability) {
 
 int16_t sts3x_heater_on(void) {
     return sensirion_i2c_write_cmd(STS3X_ADDRESS, STS3X_CMD_HEATER_ON);
+}
+
+int16_t sts3x_read_serial(uint32_t *serial) {
+    int16_t ret;
+    union {
+        uint16_t words[SENSIRION_NUM_WORDS(*serial)];
+        uint32_t u32_value;
+    } buffer;
+
+    ret = sensirion_i2c_delayed_read_cmd(
+        STS3X_ADDRESS, STS3X_CMD_READ_SERIAL_ID, STS3X_CMD_DURATION_USEC,
+        buffer.words, SENSIRION_NUM_WORDS(buffer.words));
+    SENSIRION_WORDS_TO_BYTES(buffer.words, SENSIRION_NUM_WORDS(buffer.words));
+    *serial = be32_to_cpu(buffer.u32_value);
+    return ret;
 }
 
 int16_t sts3x_heater_off(void) {
