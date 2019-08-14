@@ -2,11 +2,13 @@ drivers=sts3x
 clean_drivers=$(foreach d, $(drivers), clean_$(d))
 release_drivers=$(foreach d, $(drivers), release/$(d))
 
-.PHONY: FORCE all $(release_drivers) $(clean_drivers) style-check style-fix
+.PHONY: FORCE all prepare $(release_drivers) $(clean_drivers) style-check style-fix
 
-all: $(drivers)
+all: prepare $(drivers)
 
-$(drivers): sts-common/sts_git_version.c FORCE
+prepare: sts-common/sts_git_version.c
+
+$(drivers): prepare
 	cd $@ && $(MAKE) $(MFLAGS)
 
 sts-common/sts_git_version.c: FORCE
@@ -16,7 +18,6 @@ sts-common/sts_git_version.c: FORCE
 		{print "#include \"sts_git_version.h\""} \
 		{print "const char * STS_DRV_VERSION_STR = \"" $$0"\";"} \
 		END {}' > $@ || echo "Can't update version, not a git repository"
-
 
 $(release_drivers): sts-common/sts_git_version.c
 	export rel=$@ && \
@@ -60,4 +61,3 @@ style-check: style-fix
 		git checkout -f; \
 		exit 1; \
 	fi;
-
