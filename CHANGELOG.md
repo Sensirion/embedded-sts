@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  * [`changed`]  Move the i2c init call out of `probe()` and into the example
  * [`changed`]  Rename `git_version.[ch]` to `sts_git_version.[ch]`
  * [`added`]  Add `sts3x_read_serial()` to read out the serial number
+ * [`changed`]  Split out `default_config.inc` from Makefile to configure paths
+                and CFLAGS
+ * [`changed`]  Only one example with either `hw_i2c` or `sw_i2c` is built,
+                depending on `CONFIG_I2C_TYPE`. Defaults to `hw_i2c`.
 
 ## [1.0.0] - 2019-05-13
 
