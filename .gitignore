@@ -1,5 +1,6 @@
 *.o
 /release
+/sts-common/sts_git_version.c
+/sts3x/user_config.inc
 /sts3x/sts3x_example_usage_hw_i2c
 /sts3x/sts3x_example_usage_sw_i2c
-/sts-common/sts_git_version.c
