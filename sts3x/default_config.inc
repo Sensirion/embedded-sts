@@ -1,6 +1,7 @@
-sensirion_common_dir ?= ../embedded-common
-sts_common_dir ?= ../sts-common
-sts3x_dir ?= ./
+sts_driver_dir ?= ..
+sensirion_common_dir ?= ${sts_driver_dir}/embedded-common
+sts_common_dir ?= ${sts_driver_dir}/sts-common
+sts3x_dir ?= ${sts_driver_dir}/sts3x
 CONFIG_I2C_TYPE ?= hw_i2c
 
 sw_i2c_impl_src ?= ${sensirion_common_dir}/sw_i2c/sensirion_sw_i2c_implementation.c
