@@ -64,8 +64,6 @@ static const uint8_t STS3X_ADDRESS = STS_ADDRESS;
 static const uint8_t STS3X_ADDRESS = 0x4A;
 #endif
 
-static const uint16_t STS3X_MEASUREMENT_DURATION_USEC = 15000;
-
 static uint16_t sts3x_cmd_measure = STS3X_CMD_MEASURE_HPM;
 
 int16_t sts3x_measure_blocking_read(int32_t *temperature) {

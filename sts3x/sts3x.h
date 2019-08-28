@@ -54,6 +54,8 @@ extern "C" {
 #define STATUS_CRC_FAIL (-2)
 #define STATUS_UNKNOWN_DEVICE (-3)
 
+#define STS3X_MEASUREMENT_DURATION_USEC 15500
+
 /**
  * Detects if a sensor is connected by reading out the ID register.
  * If the sensor does not answer or if the answer is not the expected value,
