@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  * [`fixed`]  Measurement duration could take at most 15.5ms (datasheet) but we
               only waited 15ms
  * [`added`]  Add `STS3X_MEASUREMENT_DURATION_USEC` to header
+ * [`changed`] Fix compilation warnings when compiling the linux user space
+               sample implementation with `CONFIG_I2C_TYPE` set to `sw_i2c`
 
 ## [1.0.0] - 2019-05-13
 
