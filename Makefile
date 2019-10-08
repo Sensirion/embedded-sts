@@ -29,6 +29,7 @@ $(release_drivers): sts-common/sts_git_version.c
 	cp -r embedded-common/* "$${pkgdir}" && \
 	cp -r sts-common/* "$${pkgdir}" && \
 	cp -r $${driver}/* "$${pkgdir}" && \
+	cp CHANGELOG.md LICENSE "$${pkgdir}" && \
 	echo 'sts_driver_dir = .' >> $${pkgdir}/user_config.inc && \
 	echo 'sts_common_dir = .' >> $${pkgdir}/user_config.inc && \
 	echo 'sensirion_common_dir = .' >> $${pkgdir}/user_config.inc && \
