@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2019-10-22
+
  * [`fixed`]   Improved compatibility with C++ compilers
  * [`changed`] Return types are now `int16_t` instead of `int8_t` (in line with
                other embedded drivers).
@@ -33,5 +35,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
  * Initial support for STS3x
 
-[Unreleased]: https://github.com/Sensirion/embedded-sts/compare/1.0.0...master
+[Unreleased]: https://github.com/Sensirion/embedded-sts/compare/2.0.0...master
+[2.0.0]: https://github.com/Sensirion/embedded-sts/compare/1.0.0...2.0.0
 [1.0.0]: https://github.com/Sensirion/embedded-sts/releases/tag/1.0.0
