@@ -4,11 +4,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+
+## [2.1.0] - 2020-06-26
  * [`changed`]  Use configuration independent endianness conversions. No more
                 need to correctly set `SENSIRION_BIG_ENDIAN`
  * [`added`]    Add convenience functions convert between Celsius and Fahrenheit
-
-
 
 ## [2.0.0] - 2019-10-22
 
@@ -40,6 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
  * Initial support for STS3x
 
-[Unreleased]: https://github.com/Sensirion/embedded-sts/compare/2.0.0...master
+[Unreleased]: https://github.com/Sensirion/embedded-sts/compare/2.1.0...master
+[2.1.0]: https://github.com/Sensirion/embedded-sts/compare/2.0.0...2.1.0
 [2.0.0]: https://github.com/Sensirion/embedded-sts/compare/1.0.0...2.0.0
 [1.0.0]: https://github.com/Sensirion/embedded-sts/releases/tag/1.0.0
