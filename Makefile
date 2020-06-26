@@ -2,9 +2,10 @@ drivers=sts3x
 clean_drivers=$(foreach d, $(drivers), clean_$(d))
 release_drivers=$(foreach d, $(drivers), release/$(d))
 
-.PHONY: FORCE all prepare $(release_drivers) $(clean_drivers) style-check style-fix
+.PHONY: FORCE all prepare $(release_drivers) $(clean_drivers) style-check \
+	    style-fix utils clean_utils
 
-all: prepare $(drivers)
+all: prepare $(drivers) utils
 
 prepare: sts-common/sts_git_version.c
 
@@ -39,6 +40,12 @@ $(release_drivers): sts-common/sts_git_version.c
 	ln -sfn $${pkgname} $@
 
 release: clean $(release_drivers)
+
+utils:
+	$(MAKE) -C utils
+
+clean_utils:
+	$(MAKE) -C utils clean
 
 $(clean_drivers):
 	export rel=$@ && \
