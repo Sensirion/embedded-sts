@@ -66,7 +66,7 @@ static const uint8_t STS3X_ADDRESS = 0x4A;
 
 static uint16_t sts3x_cmd_measure = STS3X_CMD_MEASURE_HPM;
 
-int16_t sts3x_measure_blocking_read(int32_t *temperature) {
+int16_t sts3x_measure_blocking_read(int32_t* temperature) {
     int8_t ret = sts3x_measure();
     if (ret == STATUS_OK) {
 #if !defined(USE_SENSIRION_CLOCK_STRETCHING) || !USE_SENSIRION_CLOCK_STRETCHING
@@ -81,7 +81,7 @@ int16_t sts3x_measure() {
     return sensirion_i2c_write_cmd(STS3X_ADDRESS, sts3x_cmd_measure);
 }
 
-int16_t sts3x_read(int32_t *temperature) {
+int16_t sts3x_read(int32_t* temperature) {
     uint16_t word;
     int16_t ret = sensirion_i2c_read_words(STS3X_ADDRESS, &word, 1);
     /**
@@ -119,7 +119,7 @@ int16_t sts3x_heater_on(void) {
     return sensirion_i2c_write_cmd(STS3X_ADDRESS, STS3X_CMD_HEATER_ON);
 }
 
-int16_t sts3x_read_serial(uint32_t *serial) {
+int16_t sts3x_read_serial(uint32_t* serial) {
     int16_t ret;
     uint8_t serial_bytes[4];
 
@@ -139,7 +139,7 @@ int16_t sts3x_heater_off(void) {
     return sensirion_i2c_write_cmd(STS3X_ADDRESS, STS3X_CMD_HEATER_OFF);
 }
 
-const char *sts3x_get_driver_version() {
+const char* sts3x_get_driver_version() {
     return STS_DRV_VERSION_STR;
 }
 
