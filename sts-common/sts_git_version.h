@@ -32,6 +32,6 @@
 #ifndef GIT_VERSION_H
 #define GIT_VERSION_H
 
-extern const char *STS_DRV_VERSION_STR;
+extern const char* STS_DRV_VERSION_STR;
 
 #endif /* GIT_VERSION_H */
