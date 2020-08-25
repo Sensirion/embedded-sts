@@ -29,15 +29,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* #include <stdio.h> // printf
- * #include <unistd.h> // sleep
- */
-#include "sts3x.h"
+#include <stdio.h>  // printf
 
-/**
- * TO USE CONSOLE OUTPUT (PRINTF) AND WAIT (SLEEP) PLEASE ADAPT THEM TO YOUR
- * PLATFORM
+/* TO USE CONSOLE OUTPUT (printf) YOU MAY NEED TO ADAPT THE
+ * INCLUDE ABOVE OR DEFINE IT ACCORDING TO YOUR PLATFORM.
+ * #define printf(...)
  */
+
+#include "sts3x.h"
 
 int main(void) {
     /* Initialize I2C bus */
@@ -47,10 +46,10 @@ int main(void) {
      * a sensor.
      */
     while (sts3x_probe() != STATUS_OK) {
-        /* printf("STS sensor probing failed\n"); */
-        /* sleep(1); */
+        printf("STS sensor probing failed\n");
+        sensirion_sleep_usec(1000000);
     }
-    /* printf("STS sensor probing successful\n"); */
+    printf("STS sensor probing successful\n");
 
     while (1) {
         int32_t temperature;
@@ -61,13 +60,13 @@ int main(void) {
         int16_t ret = sts3x_measure_blocking_read(&temperature);
         if (ret == STATUS_OK) {
             temperature_degree = temperature / 1000.0f;
-            /* printf("measured temperature: %0.2f degreeCelsius\n",
-                      temperature_degree); */
+            printf("measured temperature: %0.2f degreeCelsius\n",
+                   temperature_degree);
         } else {
-            /* printf("error reading measurement\n"); */
+            printf("error reading measurement\n");
         }
 
-        /* sleep(1); */
+        sensirion_sleep_usec(1000000);
     }
     return 0;
 }
