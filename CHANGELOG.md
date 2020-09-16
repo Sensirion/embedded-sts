@@ -5,6 +5,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+ * [`changed`] Makefile to only include needed files from embedded-common
 
 ## [2.1.0] - 2020-06-26
  * [`changed`]  Use configuration independent endianness conversions. No more
