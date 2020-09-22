@@ -3,3 +3,6 @@
 /sts-common/sts_git_version.c
 /sts3x/user_config.inc
 /sts3x/sts3x_example_usage
+/i2c-mux-testbed/
+/tests/sts-test-hw_i2c
+/tests/sts-test-sw_i2c
