@@ -1,8 +1,7 @@
 #include "sensirion_test_setup.h"
 #include "sts3x.h"
 
-
-TEST_GROUP(STSTestGroup) {
+TEST_GROUP (STSTestGroup) {
     void setup() {
         int16_t ret;
         sensirion_i2c_init();
@@ -13,7 +12,7 @@ TEST_GROUP(STSTestGroup) {
 
         ret = i2c_reset();
         CHECK_EQUAL_TEXT(0, ret, "i2c_reset");
-        sensirion_sleep_usec(1500); // wait 1.5ms after reset
+        sensirion_sleep_usec(1500);  // wait 1.5ms after reset
     }
 
     void teardown() {
@@ -23,7 +22,7 @@ TEST_GROUP(STSTestGroup) {
     }
 };
 
-TEST(STSTestGroup, STS30Test) {
+TEST (STSTestGroup, STS30Test) {
     int16_t ret;
     int32_t temperature;
     uint32_t serial;
@@ -39,7 +38,7 @@ TEST(STSTestGroup, STS30Test) {
     ret = sts3x_heater_on();
     CHECK_ZERO_TEXT(ret, "sts3x_heater_on");
 
-    sensirion_sleep_usec(500); // undocumented time, sensor not ready before
+    sensirion_sleep_usec(500);  // undocumented time, sensor not ready before
 
     ret = sts3x_measure();
     CHECK_ZERO_TEXT(ret, "sts3x_measure");
@@ -53,7 +52,7 @@ TEST(STSTestGroup, STS30Test) {
     ret = sts3x_heater_off();
     CHECK_ZERO_TEXT(ret, "sts3x_heater_off");
 
-    sensirion_sleep_usec(500); // undocumented time, sensor not ready before
+    sensirion_sleep_usec(500);  // undocumented time, sensor not ready before
 
     sts3x_set_repeatability(0);
 
@@ -61,7 +60,7 @@ TEST(STSTestGroup, STS30Test) {
     CHECK_ZERO_TEXT(ret, "sts3x_read_serial");
     printf("STS30 serial: %u", serial);
 
-    const char *version = sts3x_get_driver_version();
+    const char* version = sts3x_get_driver_version();
     printf("sts3x_get_driver_version: %s\n", version);
 
     uint8_t addr = sts3x_get_configured_address();
