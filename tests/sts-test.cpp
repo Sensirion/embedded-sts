@@ -8,7 +8,8 @@ TEST_GROUP(STSTestGroup) {
         sensirion_i2c_init();
 
         ret = sensirion_i2c_mux_set_single_channel(0x72, 0);
-        CHECK_EQUAL_TEXT(0, ret, "sensirion_i2c_mux_select_TEXT(0x72, 0)");
+        CHECK_EQUAL_TEXT(0, ret,
+                         "sensirion_i2c_mux_set_single_channel(0x72, 0)");
 
         ret = i2c_reset();
         CHECK_EQUAL_TEXT(0, ret, "i2c_reset");
