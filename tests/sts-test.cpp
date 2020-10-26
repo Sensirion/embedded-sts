@@ -1,3 +1,4 @@
+#include "sensirion_common.h"
 #include "sensirion_test_setup.h"
 #include "sts3x.h"
 
@@ -10,14 +11,14 @@ TEST_GROUP (STSTestGroup) {
         CHECK_EQUAL_TEXT(0, ret,
                          "sensirion_i2c_mux_set_single_channel(0x72, 0)");
 
-        ret = i2c_reset();
-        CHECK_EQUAL_TEXT(0, ret, "i2c_reset");
+        ret = sensirion_i2c_general_call_reset();
+        CHECK_EQUAL_TEXT(0, ret, "sensirion_i2c_general_call_reset");
         sensirion_sleep_usec(1500);  // wait 1.5ms after reset
     }
 
     void teardown() {
-        int16_t ret = i2c_reset();
-        CHECK_EQUAL_TEXT(0, ret, "i2c_reset");
+        int16_t ret = sensirion_i2c_general_call_reset();
+        CHECK_EQUAL_TEXT(0, ret, "sensirion_i2c_general_call_reset");
         sensirion_i2c_release();
     }
 };
