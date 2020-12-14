@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.1] - 2020-12-14
+
  * [`changed`] Makefile to only include needed files from embedded-common
  * [`changed`] Updated embedded-common to 0.1.0 to improve compatibility when
                using multiple embedded drivers
@@ -44,7 +46,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
  * Initial support for STS3x
 
-[Unreleased]: https://github.com/Sensirion/embedded-sts/compare/2.1.0...master
+[Unreleased]: https://github.com/Sensirion/embedded-sts/compare/2.1.1...master
+[2.1.1]: https://github.com/Sensirion/embedded-sts/compare/2.1.0...2.1.1
 [2.1.0]: https://github.com/Sensirion/embedded-sts/compare/2.0.0...2.1.0
 [2.0.0]: https://github.com/Sensirion/embedded-sts/compare/1.0.0...2.0.0
 [1.0.0]: https://github.com/Sensirion/embedded-sts/releases/tag/1.0.0
