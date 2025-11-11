@@ -1,7 +1,7 @@
 # embedded-sts [![GitHub license](https://img.shields.io/badge/license-BSD3-blue.svg)](https://raw.githubusercontent.com/Sensirion/embedded-sts/master/LICENSE)
 
 This repository is deprecated, please use the new drivers:
-* STS3x: https://github.com/Sensirion/embedded-i2c-sts4x
+* STS3x: https://github.com/Sensirion/embedded-i2c-sts3x
 * STS4x: https://github.com/Sensirion/embedded-i2c-sts4x
 
 This repository contains the embedded driver sources for Sensirion's
